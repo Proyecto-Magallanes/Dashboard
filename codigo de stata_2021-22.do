@@ -5,13 +5,13 @@ V213 --> actualmente embarazada
 */
 
  clear all
-
  cd "C:\Users\MISHELL\Desktop\2. Proyecto Magallanes\Dashboard\data"
 
 * Año 2021
  use RE223132-2021, clear
  merge 1:1 CASEID using "REC0111-2021", nogen 
-
+ merge m:1 HHID using "RECH23-2021", nogen
+ 
  *Cambio del nombre
  label variable V023 "Departamento"
  label define dpto 1 "Amazonas" 2 "Ancash" 3 "Apurimac" 4 "Arequipa" 5 "Ayacucho" ///
