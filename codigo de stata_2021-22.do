@@ -7,17 +7,28 @@ V213 --> actualmente embarazada
  clear all
  cd "C:\Users\MISHELL\Desktop\2. Proyecto Magallanes\Dashboard\data"
 
-* Año 2021
- use RE223132-2021, clear
- merge 1:1 CASEID using "REC0111-2021", nogen 
- merge m:1 HHID using "RECH23-2021", nogen
+* Año 2020
+ *import spss "RE223132-2019.sav", clear
+ *save "RE223132-2019.dta", replace
+
+ use "RE223132-2019", clear
+ merge 1:1 CASEID using "REC0111-2019", nogen 
+ merge m:1 HHID using "RECH23-2019", nogen
  
  *Cambio del nombre
- label variable V023 "Departamento"
+label define dpto 1 "Amazonas" 2 "Ancash" 3 "Apurimac" 4 "Arequipa" 5 "Ayacucho" ///
+ 6 "Cajamarca"  7 "Callao" 8 "Cusco" 9 "Huancavelica" 10 "Huanuco" 11 "Ica" 12 "Junin" ///
+ 13 "La_Libertad" 14 "Lambayeque"  15 "Lima" 16 "Loreto" 17 "Madre_de_Dios" 18 "Moquegua" ///
+ 19 "Pasco" 20 "Piura" 21 "Puno" 22 "San_Martin" 23 "Tacna" 24 "Tumbes" 25 "Ucayali"
+label values V023 dpto
+decode V023, generate(Departamento)
+
+ /* label variable V023 "Departamento"
  label define dpto 1 "Amazonas" 2 "Ancash" 3 "Apurimac" 4 "Arequipa" 5 "Ayacucho" ///
  6 "Cajamarca"  7 "Callao" 8 "Cusco" 9 "Huancavelica" 10 "Huanuco" 11 "Ica" 12 "Junin" ///
  13 "La_Libertad" 14 "Lambayeque"  15 "Lima" 16 "Loreto" 17 "Madre_de_Dios" 18 "Moquegua" ///
  19 "Pasco" 20 "Piura" 21 "Puno" 22 "San_Martin" 23 "Tacna" 24 "Tumbes" 25 "Ucayali"
+ */
  
  *Keep para edades
  keep if V013 ==1 // keep para edades 15-19
@@ -41,13 +52,19 @@ V213 --> actualmente embarazada
  * Calcular el porcentaje ponderado
  gen embara= emba * 100
  keep V023 embara
- 
+ format embara %9.2f
+
+
  /* Crear el gráfico de barras
  graph bar (asis) emba, over(V023) percentage ///
     ytitle("Departamentos") xtitle("Porcentaje de Embarazadas") ///
     legend(off) title("Porcentaje de Embarazadas por Departamento")
 	*/
- save embarazo, replace
+
+	 save embarazo-2019, replace
+
+* export excel using "C:\Users\MISHELL\Desktop\2. Proyecto Magallanes\Dashboard\data\embarazo22.xlsx", replace
+* save embarazo22.xlsl, replace
 
 *----------------------------------------------------------------------------- 
 *Matrimonio Infantil 
