@@ -12,7 +12,11 @@ st_layers(worldMap)
 
 #-----
 
-countries=sf::st_read(worldMap,layer='countries')
+install.packages('haven')
+library(haven)
+densidad <- read_dta("C:/Users/MISHELL/Desktop/2. Proyecto Magallanes/Dashboard/data/densidad.dta")
+
+# countries=sf::st_read(worldMap,layer='countries')
 
 #-----
 
@@ -30,7 +34,7 @@ saveRDS(choro1, file = "choro1.rds")
 
 #-----
 
-baseHist=ggplot(data=countries,aes(x=Total))  
+baseHist=ggplot(data=densidad,aes(x=Total))  
 hist1=baseHist + geom_histogram()
 hist1
 saveRDS(hist1, file = "hist1.rds")
